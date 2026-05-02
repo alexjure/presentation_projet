@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<!--
+Project: Quiz
+Author: Alex Juré
+Date: ....
+Description: Affichage de l'inscription et des questions
+W3C Validator: OK
+-->
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Interactif</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="card">
+        <div id="stepLogin">
+            <h2>Ton Pseudo</h2>
+            <input type="text" id="username" placeholder="Ex: Alex-l'Anim ">
+            <button class="btnPrimary" onclick="startQuiz()">C'est parti !</button>
+        </div>
+
+        <div id="stepQuiz" class="hidden">
+            <img id="qImg" class="image hidden" src="#" alt="Illustration">
+            <h3 id="qTitle"></h3>
+
+            <div id="qOptions"></div>
+
+            <div id="inputZone" class="hidden">
+                <input type="text" id="freeInput" placeholder="Ta réponse ici...">
+                <button id="validateBtn" class="btnPrimary" style="margin-top: 10px;">Valider</button>
+            </div>
+        </div>
+
+        <div id="stepThanks" class="hidden">
+            <p id="feedbackMsg"></p>
+        </div>
+
+
+    </div>
+    <div class="admin">
+        <button onclick="adminReset()">
+            ⚙️ Configuration
+        </button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

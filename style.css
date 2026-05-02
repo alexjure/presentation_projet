@@ -1,0 +1,228 @@
+body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: #F7F7F7;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        min-height: 100vh;
+        margin: 0;
+        color: white;
+}
+
+/*Error*/
+
+.error {
+        padding: 20px;
+        color: white;
+        border-radius: 8px;
+        font-size: 1.2rem;
+}
+
+/*Carte globale*/
+.card {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: #E32A6E;
+        padding: 20px;
+        min-height: 200px;
+        max-width: 300px;
+        border-radius: 20px;
+        box-shadow: 0 15px 35px rgba(255, 0, 93, 0.3);
+        border: 1px solid white;
+        text-align: center;
+}
+
+h2 {
+        text-align: center;
+        margin-top: 0;
+        font-size: 1.5rem;
+        line-height: 1.3;
+}
+
+h3 {
+        font-size: 1.2rem;
+
+}
+
+input {
+        width: 100%;
+        padding: 14px;
+        margin: 15px 0;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 12px;
+        font-size: 16px;
+        outline: none;
+        box-sizing: border-box;
+}
+
+#stepQuiz {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+}
+
+button {
+        width: 100%;
+        padding: 14px;
+        margin: 10px 0;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: 0.3s;
+        font-weight: bold;
+        font-size: 20px;
+        background: #6C065A;
+        color: rgb(255, 255, 255);
+}
+
+
+.btnOpt:hover {
+        background: #e0e0e0;
+}
+
+.btnOpt {
+        background: #f0f0f0;
+        color: #000000;
+        font-size: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 12px;
+        margin: 0;
+        border-radius: 10px;
+        border: 1px solid white;
+        box-sizing: border-box;
+        min-height: 50px;
+
+}
+
+/* On s'assure que l'image remplit toujours bien son bouton quand il sera carré */
+.btnOpt img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+}
+
+.hidden {
+        display: none !important;
+}
+
+#qImg {
+        max-width: 100%;
+        width: 200px;
+        height: auto;
+        border-radius: 20px;
+}
+
+#qOptions {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 10px;
+}
+
+.imgOption {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        pointer-events: none;
+}
+
+#feedbackMsg {
+        text-align: center;
+}
+
+#feedbackMsg span {
+        color: rgb(255, 251, 0);
+        font-weight: bold;
+
+}
+
+.emoji {
+        font-size: 45px;
+}
+
+/*Selection des boutons*/
+.btnOpt.selected {
+        background-color: #6F2460 !important;
+        color: white !important;
+        border: 2px solid white !important;
+        transform: scale(1.03);
+}
+
+.admin {
+        margin-top: 30px;
+        border-top: 1px dashed #ccc;
+        padding-top: 10px;
+        text-align: center;
+}
+
+.admin button {
+        background: gray;
+        color: white;
+        border: none;
+        padding: 5px;
+        border-radius: 5px;
+        font-size: 15px;
+        opacity: 0.5;
+}
+
+
+/* Version Tablette */
+
+@media screen and (min-width: 768px) and (max-width: 992px) {}
+
+
+/* Version Mobile */
+
+@media screen and (max-width: 767px) {
+
+        .card {
+                margin: 10px;
+                box-shadow: none;
+        }
+
+        button {
+                margin: 10px 0;
+        }
+
+        /*Question*/
+
+        #qImg {
+                min-width: 100%;
+        }
+
+        #qTitle {
+                font-size: 1.2rem;
+                line-height: 1.5;
+                margin-bottom: 15px;
+        }
+
+        .btnOpt {
+                font-size: 20px
+        }
+
+        /*Après question*/
+
+        #stepThanks {
+                width: 100%;
+        }
+
+        #feedbackMsg {
+                font-size: 20px;
+                line-height: 1.5;
+        }
+
+        #feedbackMsg pseudo {
+                color: red;
+        }
+
+
+
+}

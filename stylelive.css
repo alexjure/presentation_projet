@@ -1,0 +1,159 @@
+/* --- STYLE LIVE HARMONISÉ AVEC LE QUIZ --- */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #F7F7F7; /* Gris très clair comme ton quiz */
+    color: #333; /* Texte sombre pour la lisibilité sur fond clair */
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: #E32A6E; /* Magenta du quiz */
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+h2{
+    font-size: 2.5rem;
+}
+
+/* Badge de l'heure (sobre et discret) */
+#lastUpdate {
+    font-size: 0.9rem;
+    color: #666;
+    background: white;
+    padding: 8px 20px;
+    border-radius: 50px;
+    margin-bottom: 30px;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+/* --- LEADERBOARD --- */
+#leaderboardList {
+    width: 100%;
+    max-width: 600px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* --- LIGNE JOUEUR (Style Carte) --- */
+.playerRow {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white; /* Fond blanc pour ressortir sur le gris */
+    padding: 15px 25px 15px 65px;
+    border-radius: 15px;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* --- BADGE DE POSITION (RANG) --- */
+.rankBadge {
+    position: absolute;
+    left: 15px;
+    width: 38px;
+    height: 38px;
+    background: #6F2460; /* Violet foncé de tes boutons */
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 1.1rem;
+    border: 2px solid white;
+}
+
+/* --- PODIUM (TOP 3) --- */
+
+/* 1er Place - Rappel du Magenta #E32A6E */
+/* --- PODIUM : OR, ARGENT, BRONZE --- */
+
+/* 1er Place - OR */
+.playerRow:nth-child(1) {
+    background: #E32A6E !important; /* Magenta du quiz */
+    color: white !important;
+    border: 2px solid #FFD700; /* Bordure Or */
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(255, 215, 0, 0.3);
+    z-index: 10;
+}
+.playerRow:nth-child(1) .rankBadge {
+    background: linear-gradient(145deg, #FFD700, #FFB900) !important; /* Dégradé Or */
+    color: #000 !important;
+    border: 2px solid white;
+}
+.playerRow:nth-child(1) .score {
+    color: #FFD700 !important; /* Score en Or */
+}
+
+/* 2e Place - ARGENT */
+.playerRow:nth-child(2) {
+    border-left: 8px solid #C0C0C0; /* Couleur Argent */
+}
+.playerRow:nth-child(2) .rankBadge {
+    background: linear-gradient(145deg, #C0C0C0, #A9A9A9) !important; /* Dégradé Argent */
+    color: #000 !important;
+    border: 2px solid white;
+}
+
+/* 3e Place - BRONZE */
+.playerRow:nth-child(3) {
+    border-left: 8px solid #CD7F32; /* Couleur Bronze */
+}
+.playerRow:nth-child(3) .rankBadge {
+    background: linear-gradient(145deg, #CD7F32, #8B4513) !important; /* Dégradé Bronze */
+    color: white !important;
+    border: 2px solid white;
+}
+
+/* --- RESTE DU CLASSEMENT (4ème et +) --- */
+.playerRow:nth-child(n+4) .rankBadge {
+    background-color: #6F2460; /* Violet foncé de tes boutons */
+    color: white;
+}
+
+/* --- TEXTES --- */
+.pseudo {
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+.score {
+    font-weight: 800;
+    font-size: 1.4rem;
+    color: #E32A6E; /* Points en Magenta */
+}
+
+/* --- OVERLAY STOP (Rideau de fin) --- */
+#overlayStop {
+    display: none; 
+    position: fixed; 
+    top: 0; left: 0; width: 100%; height: 100%; 
+    background: #6F2460; /* Violet foncé */
+    z-index: 9999; 
+    color: white; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+    text-align: center;
+}
+
+#overlayStop h1 {
+    color: white;
+    font-size: 4rem;
+}

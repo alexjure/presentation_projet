@@ -1,81 +1,82 @@
-// On récupère le mode dans l'URL (ex: live.html?mode=EQUIPE)
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxlBxpSqv1-oDxlqgm_ZFK8o9FEo0ZGQiRSlEumJLbcNRbUO1nH3qm3HChRALVupFt-/exec";
+
+// 1. DÉTECTION DU MODE ET DU TITRE
 const urlParams = new URLSearchParams(window.location.search);
-const currentMode = urlParams.get('mode') || "SOLO"; // Par défaut SOLO
+let quizMode = urlParams.get('mode');
 
-// On ajoute le mode à l'URL de l'API pour que le Script sache quoi renvoyer
-const API_URL = "https://script.google.com/macros/s/AKfycbxlBxpSqv1-oDxlqgm_ZFK8o9FEo0ZGQiRSlEumJLbcNRbUO1nH3qm3HChRALVupFt-/exec" + "?mode=" + currentMode;
+if (quizMode && quizMode.toUpperCase() === "EQUIPE") {
+    quizMode = "EQUIPE";
+    document.getElementById('liveTitle').innerText = "🏆 Classement Équipes 🏆";
+} else {
+    quizMode = "SOLO";
+    document.getElementById('liveTitle').innerText = "🏆 Classement Solo 🏆";
+}
 
-async function refreshScores() {
-    // --- MISE À JOUR DU TITRE IMMÉDIATE ---
-    // On le fait avant le 'try' pour que l'utilisateur voit le changement sans attendre le réseau
-    const titleElement = document.getElementById('liveTitle'); // Vérifie bien que ton <h1> a cet ID
-    if (titleElement) {
-        titleElement.innerText = (currentMode === "EQUIPE") ? "🏆Classement ÉQUIPES🏆" : "🏆Classement SOLO🏆";
-    }
+// 2. FONCTION PRINCIPALE DE RÉCUPÉRATION
+async function updateLeaderboard() {
+    const badge = document.getElementById('statusBadge');
+    const list = document.getElementById('leaderboardList');
+    const overlay = document.getElementById('overlayStop');
+    const timeDisplay = document.getElementById('lastUpdate');
 
     try {
-        const response = await fetch(API_URL);
+        // Appel au script avec le paramètre mode
+        const response = await fetch(`${SCRIPT_URL}?mode=${quizMode}`);
         const data = await response.json();
 
-        const statusBadge = document.getElementById('statusBadge');
-        if(statusBadge){
-            if(data.statut==='OUVERT'){
-                if(data.statut === 'OUVERT'){
-                    statusBadge.innerText="● Concours Ouvert";
-                    statusBadge.style.backgroundColor="#28a745";
-                    statusBadge.style.color="white"
-                } else{
-                    statusBadge.innerText="● Concours Fermé";
-                    statusBadge.style.backgroundColor="#dc3545"
-                    statusBadge.style.color="white"
-                }
-            }
-        }
-        // 1. Mise à jour de l'heure
-        const statusDiv = document.getElementById('lastUpdate');
-        if (statusDiv) {
-            const now = new Date();
-            statusDiv.innerText = "Dernière mise à jour : " + now.toLocaleTimeString();
+        // Gestion du badge de statut (OUVERT / FERMÉ)
+        if (data.statut === "FERMÉ") {
+            badge.innerText = "SESSIONS CLOSES";
+            badge.style.background = "#dc3545"; // Rouge
+            badge.style.color = "white";
+            overlay.style.display = "flex"; // Affiche l'écran de fin
+        } else {
+            badge.innerText = "QUIZ EN COURS";
+            badge.style.background = "#28a745"; // Vert
+            badge.style.color = "white";
+            overlay.style.display = "none";
         }
 
-        // 2. Gestion du rideau STOP (basé sur la feuille active : Votes ou Equipes)
-        const overlay = document.getElementById('overlayStop');
-        if (overlay) {
-            overlay.style.display = (data.statut === "OUVERT") ? "none": "flex";
+        // Mise à jour de l'heure
+        const now = new Date();
+        timeDisplay.innerText = "Dernière mise à jour : " + now.toLocaleTimeString();
+
+        // Nettoyage et remplissage de la liste
+        list.innerHTML = "";
+        
+        if (data.scores.length === 0) {
+            list.innerHTML = "<li class='item'>Aucune donnée pour le moment...</li>";
+            return;
         }
 
-        // 3. Mise à jour de la liste
-        const listElement = document.getElementById('leaderboardList');
-        const leaderboard = data.scores;
-
-        if (listElement && leaderboard) {
-            listElement.innerHTML = ""; 
+        data.scores.forEach((player, index) => {
+            const li = document.createElement('li');
+            li.className = "item";
             
-            if (leaderboard.length === 0) {
-                listElement.innerHTML = "<li style='text-align:center; padding:20px; font-style:italic;'>Aucun score enregistré pour le moment.</li>";
-            } else {
-                leaderboard.forEach((player, index) => {
-                    const li = document.createElement('li');
-                    li.className = "playerRow"; 
-                    li.innerHTML = `
-                        <div class="rankBadge">${index + 1}</div>
-                        <span class="pseudo">${player.pseudo}</span>
-                        <span class="score">${player.score} pts</span>
-                    `;
-                    listElement.appendChild(li);
-                });
-            }
-        }
-    } catch (e) {
-        console.error("Erreur Live:", e);
-        // Optionnel : afficher un message d'erreur discret à l'écran
-        const statusDiv = document.getElementById('lastUpdate');
-        if (statusDiv) statusDiv.innerText = "⚠️ Erreur de connexion au serveur...";
+            // Animation décalée pour chaque ligne
+            li.style.animationDelay = (index * 0.1) + "s";
+
+            // Gestion des médailles pour le podium
+            let rankLabel = index + 1;
+            if (index === 0) rankLabel = "🥇";
+            if (index === 1) rankLabel = "🥈";
+            if (index === 2) rankLabel = "🥉";
+
+            li.innerHTML = `
+                <span class="rank">${rankLabel}</span>
+                <span class="pseudo">${player.pseudo}</span>
+                <span class="score">${player.score} pts</span>
+            `;
+            list.appendChild(li);
+        });
+
+    } catch (err) {
+        console.error("Erreur de connexion :", err);
+        badge.innerText = "ERREUR RÉSEAU";
+        badge.style.background = "#ffc107"; // Orange/Jaune
     }
 }
 
-// Rafraîchissement automatique
-setInterval(refreshScores, 4000); // 4 sec pour être zen avec les quotas Google
-refreshScores();
-
-
+// 3. LANCEMENT ET RECHARGEMENT AUTO
+updateLeaderboard(); // Premier lancement immédiat
+setInterval(updateLeaderboard, 10000); // Rafraîchit toutes les 10 secondes

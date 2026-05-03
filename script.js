@@ -164,7 +164,7 @@ function checkIfAlreadyDone() {
             `;
         }
     } else {
-        // La question n'a jamais été faite on l'affiche
+        // La question n'a jamais été faite alors on l'affiche
         showQuestion();
     }
 }

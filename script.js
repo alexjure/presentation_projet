@@ -24,19 +24,19 @@ const QUESTIONS = {
         type: "image" // image
     },
     "3m9w4": {
-        t: "Question 3: Dans quel ville se situe la Tour Eiffel'",
+        t: "Question 3: Dans quel ville se situe la Tour Eiffel",
         ok: "Paris",
         img: "images/question3.png",
         type: "text" // input texte
     },
     "4k5vj": {
-        t: "Question 4: En quelle année à eu lieu la dernière Armada à Rouen",
+        t: "Question 4: En quelle année a eu lieu la dernière Armada à Rouen",
         ok: "2023",
         img: "images/question4.png",
         type: "number" // input number
     },
     "53b8n": {
-        t: "Question 5: Sélectionne les trois première lettres de l'alphabet?",
+        t: "Question 5: Sélectionne les trois premières lettres de l'alphabet?",
         r: ["D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "A", "N", "O", "P", "Q", "R", "S", "T", "C", "U", "V", "W", "X", "Y", "B", "Z"],
         ok: ["A", "B", "C"],
         img: "images/question5.png",
@@ -152,14 +152,14 @@ function checkIfAlreadyDone() {
         if (finishedCount >= totalQuestions) {
             document.getElementById('feedbackMsg').innerHTML = `
                 Félicitations <span>${pseudo}</span> !<br><br>
-                Tu as terminé le quiz ! Rend toi sur le grand écran pour voir ton résultats 🏆
+                Tu as terminé le quiz ! Rend toi sur le grand écran pour voir ton résultat 🏆
             `;
         } else {
             // Sinon message de progression + prochaine étape
             document.getElementById('feedbackMsg').innerHTML = `
                 Hello <span>${pseudo}</span> !<br><br>
                 Tu as déjà validé cette affiche.<br>
-                Tu as fait <strong>${finishedCount}</strong> questions sur <strong>${totalQuestions}</strong>
+                Tu as fait <strong>${finishedCount}</strong> question(s) sur <strong>${totalQuestions}</strong>
                 Ta prochaine mission est l'<strong>affiche ${nextRequiredIndex + 1}</strong> ! 🏃‍♂️
             `;
         }
